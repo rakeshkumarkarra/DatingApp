@@ -1,23 +1,16 @@
-﻿using Dating.API.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace Dating.API.Models
+namespace Dating.API.DTOs
 {
-    public partial class AppUser
+    public class MemberDto
     {
-        public AppUser()
-        {
-            Photos = new HashSet<Photo>();
-        }
-
         public int Id { get; set; }
         public string UserName { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string PhotoUrl { get; set; }
+        public int Age { get; set; }
         public string KnownAs { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? LastActive { get; set; }
@@ -27,8 +20,6 @@ namespace Dating.API.Models
         public string Interests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-
-        public virtual ICollection<Photo> Photos { get; set; }
-        //public int GetAge => DateOfBirth.Value.CalculateAge();
+        public IList<PhotoDto> Photos { get; set; }
     }
 }
