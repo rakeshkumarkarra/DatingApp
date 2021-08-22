@@ -18,6 +18,7 @@ namespace Dating.API.Models
         }
 
         public virtual DbSet<AppUser> AppUsers { get; set; }
+        public virtual DbSet<Photo> Photos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,9 +37,59 @@ namespace Dating.API.Models
             {
                 entity.ToTable("AppUser");
 
+                entity.Property(e => e.City)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Country)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Created)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
+
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Interests)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Introduction).IsUnicode(false);
+
+                entity.Property(e => e.KnownAs)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastActive)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.LookingFor).IsUnicode(false);
+
                 entity.Property(e => e.UserName)
                     .HasMaxLength(200)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Photo>(entity =>
+            {
+                entity.ToTable("Photo");
+
+                entity.Property(e => e.PublicId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Url).IsUnicode(false);
+
+                entity.HasOne(d => d.AppUser)
+                    .WithMany(p => p.Photos)
+                    .HasForeignKey(d => d.AppUserId)
+                    .HasConstraintName("FK_Photo_AppUser");
             });
 
             OnModelCreatingPartial(modelBuilder);
