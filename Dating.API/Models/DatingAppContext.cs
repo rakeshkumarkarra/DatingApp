@@ -80,6 +80,8 @@ namespace Dating.API.Models
             {
                 entity.ToTable("Photo");
 
+                entity.Property(e => e.IsMain).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.PublicId)
                     .HasMaxLength(100)
                     .IsUnicode(false);
