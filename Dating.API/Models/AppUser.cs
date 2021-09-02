@@ -1,5 +1,4 @@
-﻿using Dating.API.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -29,6 +28,5 @@ namespace Dating.API.Models
         public string Country { get; set; }
 
         public virtual ICollection<Photo> Photos { get; set; }
-        //public int GetAge => DateOfBirth.Value.CalculateAge();
     }
 }
